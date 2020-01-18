@@ -1,11 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 const routes = require('./routes');
+const { setupWebsocket } = require('./websocket');
 
 const app = express();
+const server = http.Server(app);
 
-mongoose.connect('mongodb+srv://omnistack:senha@cluster0-jalnn.mongodb.net/week10?retryWrites=true&w=majority', {
+setupWebsocket(server);
+
+mongoose.connect('mongodb+srv://omnistack:123@bruno@cluster0-jalnn.mongodb.net/week10?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -26,4 +31,4 @@ app.use(routes);
 // MongoDB (Não-relacional)
 
 
-app.listen(3333);
+server.listen(3333);
